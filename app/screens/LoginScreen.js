@@ -7,12 +7,12 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = () => {
     // Handle login logic here
-    console.log("Logging in with", email, password);
+    console.log("Logged In", email, password);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recycling App</Text>
+      <Text style={styles.title}>Smart EcoCycle</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"

@@ -1,14 +1,41 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert  } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    // Handle login logic here
-    console.log("Logged In", email, password);
-  };
+  const handleLogin = async () => {
+    if (!email || !password) {
+        Alert.alert('Error', 'Please enter both email and password.');
+        return;
+    }
+
+    try {
+        const response = await fetch('http://192.168.0.106:8000/app/login/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            Alert.alert('Success', 'Login successful!');
+
+            // Navigate based on user role
+            if (data.role === 'user') {
+                navigation.navigate('User');
+            } 
+        } else {
+            Alert.alert('Login Failed', data.message || 'Invalid credentials.');
+        }
+    } catch (error) {
+        console.error(error);
+        Alert.alert('Error', 'Failed to connect to server.');
+    }
+};
 
   return (
     <View style={styles.container}>

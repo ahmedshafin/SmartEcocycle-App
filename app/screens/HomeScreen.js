@@ -51,7 +51,7 @@ const HomeScreen = () => {
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>smartecocycle.com</Text>
                     <View style={styles.footerLinks}>
-                        <Text style={styles.footerLink}>About Us</Text>
+                        <Text style={styles.footerLink} onPress={() => navigation.navigate("About")}>About Us</Text>
                         <Text style={styles.footerLink} onPress={() => navigation.navigate("Contact")}>Contact Us</Text>
                         <Text style={styles.footerLink}>Terms of Service</Text>
                     </View>

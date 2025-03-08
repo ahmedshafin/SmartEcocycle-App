@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, TextInput, Button, Platform, StatusBar, Alert } from 'react-native';
 import * as Location from 'expo-location';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import API_BASE_URL from './config';
 
 const DashboardScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -53,9 +54,9 @@ const DashboardScreen = () => {
       longitude: location.longitude,
     };
     
-
+    
     try {
-      const response = await fetch('http://192.168.0.106:8000/api/pickup-requests/', {
+      const response = await fetch(`${API_BASE_URL}/api/pickup-requests/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(pickupData),

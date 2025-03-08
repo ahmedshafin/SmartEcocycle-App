@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert  } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import API_BASE_URL from './config';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -13,7 +14,7 @@ const LoginScreen = ({ navigation }) => {
     }
 
     try {
-        const response = await fetch('http://192.168.0.106:8000/app/login/', {
+        const response = await fetch(`${API_BASE_URL}/app/login/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),

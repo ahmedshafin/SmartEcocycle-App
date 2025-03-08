@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView, StyleSheet, useWindowDimensions, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
+import API_BASE_URL from './config';
 
 const ContactUsScreen = () => {
     const [formData, setFormData] = useState({
@@ -22,9 +23,9 @@ const ContactUsScreen = () => {
             Alert.alert('Error', 'Please fill in all required fields.');
             return;
         }
-
+        
         try {
-            const response = await fetch('http://192.168.0.106:8000/api/contact/', {
+            const response = await fetch(`${API_BASE_URL}/api/contact/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)

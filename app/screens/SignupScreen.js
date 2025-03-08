@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import API_BASE_URL from './config';
 
 const SignupScreen = ({ navigation }) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  
   const handleSignup = async () => {
     try {
-      const response = await fetch("http://192.168.0.106:8000/app/signup/", {
+      const response = await fetch(`${API_BASE_URL}/app/signup/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

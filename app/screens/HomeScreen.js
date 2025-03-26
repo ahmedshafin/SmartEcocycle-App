@@ -53,7 +53,7 @@ const HomeScreen = () => {
                     <View style={styles.footerLinks}>
                         <Text style={styles.footerLink} onPress={() => navigation.navigate("About")}>About Us</Text>
                         <Text style={styles.footerLink} onPress={() => navigation.navigate("Contact")}>Contact Us</Text>
-                        <Text style={styles.footerLink}>Terms of Service</Text>
+                        <Text style={styles.footerLink} onPress={() => navigation.navigate("RecyclerLogin")}>Recycler Login</Text>
                     </View>
                 </View>
             </ScrollView>

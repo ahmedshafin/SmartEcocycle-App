@@ -13,20 +13,27 @@ import {
   Alert,
   Animated 
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+
+import { useNavigation, useRoute } from '@react-navigation/native'; // Import useNavigation
 import * as Location from 'expo-location';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { LinearGradient } from 'expo-linear-gradient';
 import API_BASE_URL from './config';
 
+//Dynamic Show here it starts
 const DashboardScreen = () => {
   const navigation = useNavigation(); // Access navigation object
+  const route = useRoute(); // Get the route object to access params
+  // Extract the data passed from LoginScreen
+  const { full_name, rating, total_pickup, total_recycled } = route.params;
+
   const [isModalVisible, setModalVisible] = useState(false);
   const [address, setAddress] = useState('');
   const [quantity, setQuantity] = useState('');
   const [contact, setContact] = useState('');
   const [location, setLocation] = useState(null);
   const fadeAnim = useState(new Animated.Value(0))[0];
+  
 
   // Hide the Stack Navigator header
   useLayoutEffect(() => {
@@ -124,11 +131,11 @@ const DashboardScreen = () => {
             {/* Welcome Section */}
             <View style={styles.welcomeSection}>
               <View>
-                <Text style={styles.welcomeText}>Welcome, User!</Text>
+                <Text style={styles.welcomeText}>Welcome, {full_name}!</Text>
                 {/* Rating Component */}
                 <View style={styles.ratingContainer}>
                   <Icon name="star" size={20} color="#FFD700" />
-                  <Text style={styles.ratingText}>4.8/5</Text>
+                  <Text style={styles.ratingText}>{rating}/5</Text>
                 </View>
               </View>
               <Icon name="account-circle" size={50} color="#388E3C" />
@@ -142,14 +149,14 @@ const DashboardScreen = () => {
                     <LinearGradient colors={['#FFB300', '#F57C00']} style={styles.iconGradient}>
                       <Icon name="local-shipping" size={28} color="#fff" />
                     </LinearGradient>
-                    <Text style={styles.statValue}>5</Text>
+                    <Text style={styles.statValue}>{total_pickup}</Text>
                     <Text style={styles.statLabel}>Total Pickups</Text>
                   </View>
                   <View style={styles.statItem}>
                     <LinearGradient colors={['#66BB6A', '#388E3C']} style={styles.iconGradient}>
                       <Icon name="recycling" size={28} color="#fff" />
                     </LinearGradient>
-                    <Text style={styles.statValue}>25 kg</Text>
+                    <Text style={styles.statValue}>{total_recycled} kg</Text>
                     <Text style={styles.statLabel}>Total Recycled</Text>
                   </View>
                 </View>

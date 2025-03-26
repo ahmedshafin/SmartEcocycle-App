@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert  } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import API_BASE_URL from './config';
 
 const LoginScreen = ({ navigation }) => {
@@ -24,10 +24,17 @@ const LoginScreen = ({ navigation }) => {
 
         if (response.ok) {
             Alert.alert('Success', 'Login successful!');
+            
 
             // Navigate based on user role
+            
             if (data.role === 'user') {
-                navigation.navigate('User');
+                navigation.navigate('User', { 
+                  full_name: data.full_name,
+                  rating: data.rating,
+                  total_pickup: data.total_pickup,
+                  total_recycled: data.total_recycled
+              });
             } 
         } else {
             Alert.alert('Login Failed', data.message || 'Invalid credentials.');

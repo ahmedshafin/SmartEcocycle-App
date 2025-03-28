@@ -26,6 +26,7 @@ const DashboardScreen = () => {
   const route = useRoute(); // Get the route object to access params
   // Extract the data passed from LoginScreen
   const { full_name, rating, total_pickup, total_recycled } = route.params;
+  
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [address, setAddress] = useState('');
@@ -114,6 +115,7 @@ const DashboardScreen = () => {
       alert('Failed to submit pickup request. Please try again.');
     }
   };
+  
 
   return (
     <View style={styles.safeArea}>

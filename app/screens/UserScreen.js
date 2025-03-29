@@ -264,140 +264,145 @@ const DashboardScreen = () => {
       cancelled: '#D32F2F',
     }[status?.toLowerCase()] || '#9E9E9E');
 
-  return (
-    <View style={styles.safeArea}>
-      <LinearGradient colors={['#C8E6C9', '#81C784']} style={styles.gradientBackground}>
-        <ScrollView
-          contentContainerStyle={styles.container}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={fetchPickupRequests}
-              colors={['#388E3C']}
-              tintColor="#388E3C"
-            />
-          }
-        >
-          <Animated.View style={{ opacity: fadeAnim }}>
-            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-              <Icon name="arrow-back" size={28} color="#1B5E20" />
-            </TouchableOpacity>
-
-            <View style={styles.welcomeSection}>
-              <View>
-                <Text style={styles.welcomeText}>Welcome, {full_name}!</Text>
-                <View style={styles.ratingContainer}>
-                  <Icon name="star" size={20} color="#FFD700" />
-                  <Text style={styles.ratingText}>{rating}/5</Text>
+    return (
+      <View style={styles.safeArea}>
+        <LinearGradient colors={['#C8E6C9', '#81C784']} style={styles.gradientBackground}>
+          <ScrollView
+            contentContainerStyle={styles.container}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={fetchPickupRequests}
+                colors={['#388E3C']}
+                tintColor="#388E3C"
+              />
+            }
+          >
+            <Animated.View style={{ opacity: fadeAnim }}>
+              {/* Back Button */}
+              <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                <Icon name="arrow-back" size={28} color="#1B5E20" />
+              </TouchableOpacity>
+    
+              {/* Welcome Section with Logout Button */}
+              <View style={styles.welcomeSection}>
+                <View>
+                  <Text style={styles.welcomeText}>Welcome, {full_name}!</Text>
+                  <View style={styles.ratingContainer}>
+                    <Icon name="star" size={20} color="#FFD700" />
+                    <Text style={styles.ratingText}>{rating}/5</Text>
+                  </View>
+                  {/* Moved Logout Button */}
+                  <TouchableOpacity style={styles.secondaryButton} onPress={handleLogout}>
+                    <LinearGradient colors={['#FF0000', '#D32F2F']} style={styles.buttonGradient}>
+                      <Text style={styles.buttonText}>Logout</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
                 </View>
+                <Icon name="account-circle" size={50} color="#388E3C" />
               </View>
-              <Icon name="account-circle" size={50} color="#388E3C" />
-            </View>
-
-            <View style={styles.card}>
-              <LinearGradient colors={['#E8F5E9', '#F1F8E9']} style={styles.cardGradient}>
-                <Text style={styles.sectionTitle}>Your Recycling Stats</Text>
-                <View style={styles.statsContainer}>
-                  <View style={styles.statItem}>
-                    <LinearGradient colors={['#FFB300', '#F57C00']} style={styles.iconGradient}>
-                      <Icon name="local-shipping" size={28} color="#fff" />
-                    </LinearGradient>
-                    <Text style={styles.statValue}>{total_pickup}</Text>
-                    <Text style={styles.statLabel}>Total Pickups</Text>
-                  </View>
-                  <View style={styles.statItem}>
-                    <LinearGradient colors={['#66BB6A', '#388E3C']} style={styles.iconGradient}>
-                      <Icon name="recycling" size={28} color="#fff" />
-                    </LinearGradient>
-                    <Text style={styles.statValue}>{total_recycled} kg</Text>
-                    <Text style={styles.statLabel}>Total Recycled</Text>
-                  </View>
-                </View>
-              </LinearGradient>
-            </View>
-
-            <View style={styles.card}>
-              <LinearGradient colors={['#E8F5E9', '#F1F8E9']} style={styles.cardGradient}>
-                <Text style={styles.sectionTitle}>Your Pickup Requests</Text>
-                {pickupRequests.length > 0 ? (
-                  pickupRequests.map((request) => (
-                    <View key={request.id} style={styles.requestItem}>
-                      <LinearGradient colors={['#42A5F5', '#1976D2']} style={styles.requestIconGradient}>
-                        <Icon name="location-on" size={24} color="#fff" />
+    
+              {/* Your Recycling Stats Card */}
+              <View style={styles.card}>
+                <LinearGradient colors={['#E8F5E9', '#F1F8E9']} style={styles.cardGradient}>
+                  <Text style={styles.sectionTitle}>Your Recycling Stats</Text>
+                  <View style={styles.statsContainer}>
+                    <View style={styles.statItem}>
+                      <LinearGradient colors={['#FFB300', '#F57C00']} style={styles.iconGradient}>
+                        <Icon name="local-shipping" size={28} color="#fff" />
                       </LinearGradient>
-                      <View style={styles.requestDetails}>
-                        <Text style={styles.requestAddress}>{request.address || 'No address'}</Text>
-                        <Text style={styles.requestMaterial}>{request.quantity || 'Unknown'}</Text>
-                        <View style={styles.statusRow}>
-                          <Text style={styles.requestStatus}>Status: </Text>
-                          <Text style={[styles.statusText, { color: getStatusColor(request.status) }]}>
-                            {request.status || 'Pending'}
-                          </Text>
-                        </View>
-                        <Text style={styles.requestDate}>
-                          {request.created_at ? new Date(request.created_at).toLocaleString() : 'N/A'}
-                        </Text>
-                      </View>
+                      <Text style={styles.statValue}>{total_pickup}</Text>
+                      <Text style={styles.statLabel}>Total Pickups</Text>
                     </View>
-                  ))
-                ) : (
-                  <Text style={styles.noRequestsText}>No pickup requests yet</Text>
-                )}
-              </LinearGradient>
-            </View>
-
-            <View style={styles.buttonContainer}>
+                    <View style={styles.statItem}>
+                      <LinearGradient colors={['#66BB6A', '#388E3C']} style={styles.iconGradient}>
+                        <Icon name="recycling" size={28} color="#fff" />
+                      </LinearGradient>
+                      <Text style={styles.statValue}>{total_recycled} kg</Text>
+                      <Text style={styles.statLabel}>Total Recycled</Text>
+                    </View>
+                  </View>
+                </LinearGradient>
+              </View>
+    
+              {/* Request New Pickup Button */}
               <TouchableOpacity style={styles.primaryButton} onPress={() => setModalVisible(true)}>
                 <LinearGradient colors={['#66BB6A', '#388E3C']} style={styles.buttonGradient}>
                   <Text style={styles.buttonText}>Request New Pickup</Text>
                 </LinearGradient>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.secondaryButton} onPress={handleLogout}>
-                <LinearGradient colors={['#EF5350', '#D32F2F']} style={styles.buttonGradient}>
-                  <Text style={styles.buttonText}>Logout</Text>
+    
+              {/* Your Pickup Requests Card */}
+              <View style={styles.card}>
+                <LinearGradient colors={['#E8F5E9', '#F1F8E9']} style={styles.cardGradient}>
+                  <Text style={styles.sectionTitle}>Your Pickup Requests</Text>
+                  {pickupRequests.length > 0 ? (
+                    pickupRequests.map((request) => (
+                      <View key={request.id} style={styles.requestItem}>
+                        <LinearGradient colors={['#42A5F5', '#1976D2']} style={styles.requestIconGradient}>
+                          <Icon name="location-on" size={24} color="#fff" />
+                        </LinearGradient>
+                        <View style={styles.requestDetails}>
+                          <Text style={styles.requestAddress}>{request.address || 'No address'}</Text>
+                          <Text style={styles.requestMaterial}>{request.quantity || 'Unknown'}</Text>
+                          <View style={styles.statusRow}>
+                            <Text style={styles.requestStatus}>Status: </Text>
+                            <Text style={[styles.statusText, { color: getStatusColor(request.status) }]}>
+                              {request.status || 'Pending'}
+                            </Text>
+                          </View>
+                          <Text style={styles.requestDate}>
+                            {request.created_at ? new Date(request.created_at).toLocaleString() : 'N/A'}
+                          </Text>
+                        </View>
+                      </View>
+                    ))
+                  ) : (
+                    <Text style={styles.noRequestsText}>No pickup requests yet</Text>
+                  )}
                 </LinearGradient>
-              </TouchableOpacity>
-            </View>
-          </Animated.View>
-        </ScrollView>
-
-        <Modal visible={isModalVisible} animationType="slide" transparent={true}>
-          <View style={styles.modalContainer}>
-            <LinearGradient colors={['#E8F5E9', '#F1F8E9']} style={styles.modalContent}>
-              <Text style={styles.modalTitle}>Request Pickup</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Address"
-                value={address}
-                onChangeText={setAddress}
-                placeholderTextColor="#888"
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Quantity (e.g., 5 kg)"
-                value={quantity}
-                onChangeText={setQuantity}
-                keyboardType="numeric"
-                placeholderTextColor="#888"
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Contact Number"
-                value={contact}
-                onChangeText={setContact}
-                keyboardType="phone-pad"
-                placeholderTextColor="#888"
-              />
-              <View style={styles.modalButtonContainer}>
-                <Button title="Cancel" onPress={() => setModalVisible(false)} color="#F44336" />
-                <Button title="Submit" onPress={handleSubmit} color="#388E3C" disabled={loading} />
               </View>
-            </LinearGradient>
-          </View>
-        </Modal>
-      </LinearGradient>
-    </View>
-  );
+            </Animated.View>
+          </ScrollView>
+    
+          {/* Modal (unchanged) */}
+          <Modal visible={isModalVisible} animationType="slide" transparent={true}>
+            <View style={styles.modalContainer}>
+              <LinearGradient colors={['#E8F5E9', '#F1F8E9']} style={styles.modalContent}>
+                <Text style={styles.modalTitle}>Request Pickup</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Address"
+                  value={address}
+                  onChangeText={setAddress}
+                  placeholderTextColor="#888"
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Quantity (e.g., 5 kg)"
+                  value={quantity}
+                  onChangeText={setQuantity}
+                  keyboardType="numeric"
+                  placeholderTextColor="#888"
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Contact Number"
+                  value={contact}
+                  onChangeText={setContact}
+                  keyboardType="phone-pad"
+                  placeholderTextColor="#888"
+                />
+                <View style={styles.modalButtonContainer}>
+                  <Button title="Cancel" onPress={() => setModalVisible(false)} color="#F44336" />
+                  <Button title="Submit" onPress={handleSubmit} color="#388E3C" disabled={loading} />
+                </View>
+              </LinearGradient>
+            </View>
+          </Modal>
+        </LinearGradient>
+      </View>
+    );
 };
 
 const styles = StyleSheet.create({

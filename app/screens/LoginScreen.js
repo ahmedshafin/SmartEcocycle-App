@@ -174,6 +174,16 @@ const LoginScreen = ({ navigation }) => {
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
+        {/* Header with Home Button */}
+        <View style={styles.header}>
+          <TouchableOpacity 
+            style={styles.homeButton}
+            onPress={() => navigation.navigate('Home')}
+          >
+            <Icon name="home" size={24} color="#FFF" />
+          </TouchableOpacity>
+        </View>
+
         {/* Floating Leaves */}
         {leaves.map((leaf, i) => (
           <Animated.View
@@ -290,7 +300,7 @@ const LoginScreen = ({ navigation }) => {
               disabled={isLoading}
             >
               <LinearGradient
-                colors={['#76FF03', '#64DD17']}
+                colors={['#ffd700', '#64DD17']}
                 style={styles.buttonGradient}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
@@ -337,6 +347,20 @@ const styles = StyleSheet.create({
   gradientContainer: {
     flex: 1,
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+  },
+  header: {
+    position: 'absolute',
+    top: Platform.OS === 'android' ? StatusBar.currentHeight + 10 : 40,
+    left: 20,
+    zIndex: 10
+  },
+  homeButton: {
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   contentContainer: {
     flex: 1,

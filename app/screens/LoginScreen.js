@@ -26,16 +26,19 @@ const LoginScreen = ({ navigation }) => {
     setIsLoading(true);
 
     try {
+      
       const response = await fetch(`${API_BASE_URL}/app/login/`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', },
         body: JSON.stringify({ email, password }),
       });
-
+      
       const data = await response.json();
+      
 
       if (response.ok) {
         // Store tokens securely
+        
         await AsyncStorage.setItem('@auth_tokens', JSON.stringify(data.tokens));
         
         // Navigate based on user role
@@ -60,7 +63,9 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Smart EcoCycle</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <Text style={styles.title}>Smart EcoCycle</Text>
+        </TouchableOpacity>
       
       <View style={styles.inputContainer}>
         <TextInput

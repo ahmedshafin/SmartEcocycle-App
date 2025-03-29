@@ -79,9 +79,7 @@ const RecyclerLoginScreen = ({ navigation }) => {
                 <TouchableOpacity>
                     <Text style={styles.footerText}>Forgot Password?</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.footerText}>Register</Text>
-                </TouchableOpacity>
+                
             </View>
         </View>
     );

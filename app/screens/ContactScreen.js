@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView, StyleSheet, useWindowDimensions, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
 import API_BASE_URL from './config';
-
+import { useNavigation } from '@react-navigation/native';
 const ContactUsScreen = () => {
     const [formData, setFormData] = useState({
         contactFullName: '',
@@ -13,6 +13,7 @@ const ContactUsScreen = () => {
 
     const { width } = useWindowDimensions();
     const isLargeScreen = width > 600;
+    const navigation = useNavigation();
 
     const handleChange = (name, value) => {
         setFormData({ ...formData, [name]: value });
@@ -21,6 +22,7 @@ const ContactUsScreen = () => {
     const handleSubmit = async () => {
         if (!formData.contactFullName || !formData.contactEmail || !formData.contactMessage) {
             Alert.alert('Error', 'Please fill in all required fields.');
+        
             return;
         }
         
@@ -32,7 +34,8 @@ const ContactUsScreen = () => {
             });
 
             if (response.ok) {
-                Alert.alert('Success', 'Your message has been sent successfully!');
+                Alert.alert('Success', 'Your message has been sent successfully!', navigation.navigate('Home'));
+                
                 setFormData({
                     contactFullName: '',
                     contactEmail: '',
